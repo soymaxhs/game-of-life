@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from './components/Header/Nav';
 import Settings from './components/Settings/Form';
+import BoardGame from './components/Board/Game';
 
 import './assets/css/grid.css'
 
@@ -11,10 +12,7 @@ interface sizes {
 
 function App() {
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
-  const [settings, setSettings] = React.useState<sizes>({
-    sizeX: 16,
-    sizeY: 16,
-  });
+  const [settings, setSettings] = React.useState<sizes>({ sizeX: 16, sizeY: 16, });
   const [matrix, setMatrix] = React.useState<Array<Array<boolean>>>();
 
   React.useEffect(() => {
@@ -27,12 +25,10 @@ function App() {
 
   const playGame = () => {
     setIsPlaying(true);
-    console.log('Running');
   }
 
   const stopGame = () => {
     setIsPlaying(false);
-    console.log('Stoping');
   }
 
   React.useEffect(() => {
@@ -40,7 +36,7 @@ function App() {
 
     if (isPlaying) {
       intervalId = setInterval(() => {
-        setMatrix(matrix?.map((r, iR) => r.map((c, iC) => {
+        isPlaying && setMatrix(matrix?.map((r, iR) => r.map((c, iC) => {
           const lCell = iR - 1 > 0 ? matrix[iR - 1][iC] : false;
           const rCell = iR + 1 < settings.sizeX ? matrix[iR + 1][iC] : false;
           const uCell = iC - 1 > 0 ? matrix[iR][iC - 1] : false;
@@ -70,7 +66,7 @@ function App() {
       }, 500);
     }
 
-    return ()=>{
+    return () => {
       intervalId !== null && clearInterval(intervalId);
     }
   }, [isPlaying, matrix, settings.sizeX, settings.sizeY]);
@@ -82,19 +78,7 @@ function App() {
       </header>
       <main>
         <Settings setSettings={setSettings} playGame={playGame} stopGame={stopGame} isPlaying={isPlaying}></Settings>
-        <div className='grid-board'>
-          {
-            matrix?.map((row, iRow) => <div className='grid-board-row' key={iRow}>
-              {row.map((col, iCol) => <div className='grid-board-col' key={iCol}>
-                <button className={'btn btn-grid ' + (col ? 'btn-dark' : 'btn-light')}
-                  onClick={() => {
-                    updateMatrix(iRow, iCol)
-                  }}
-                >{col ? 'O' : 'X'}</button>
-              </div>)}
-            </div>)
-          }
-        </div>
+        <BoardGame matrix={matrix} updateMatrix={updateMatrix}></BoardGame>
       </main>
     </>
   );

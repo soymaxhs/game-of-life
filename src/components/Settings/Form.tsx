@@ -50,6 +50,16 @@ function Form(props: settings) {
                         </div>
                     </form>
                 </div>
+                <div className='card-footer'>
+                    <div className='row'>
+                        <div className='col'>
+                            <p className='text-danger'><small>Please be free to edit the board at any time even running!</small></p>
+                        </div>
+                        <div className='col'>
+                            <p className='text-warning'><strong>You can edit the board with a simple click on any cell.</strong></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
