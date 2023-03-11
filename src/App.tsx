@@ -23,14 +23,6 @@ function App() {
     setMatrix(matrix?.map((r, iR) => r.map((c, iC) => iR === x && iC === y ? !matrix[iR][iC] : matrix[iR][iC])));
   }
 
-  const playGame = () => {
-    setIsPlaying(true);
-  }
-
-  const stopGame = () => {
-    setIsPlaying(false);
-  }
-
   React.useEffect(() => {
     let intervalId: NodeJS.Timer | null = null;
 
@@ -77,7 +69,7 @@ function App() {
         <Nav></Nav>
       </header>
       <main>
-        <Settings setSettings={setSettings} playGame={playGame} stopGame={stopGame} isPlaying={isPlaying}></Settings>
+        <Settings setSettings={setSettings} setIsPlaying={setIsPlaying} isPlaying={isPlaying}></Settings>
         <BoardGame matrix={matrix} updateMatrix={updateMatrix}></BoardGame>
       </main>
     </>

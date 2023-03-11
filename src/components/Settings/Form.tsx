@@ -2,8 +2,7 @@ import React from 'react';
 
 interface settings {
     setSettings: Function,
-    playGame: Function,
-    stopGame: Function,
+    setIsPlaying: Function,
     isPlaying: boolean,
 }
 
@@ -43,8 +42,8 @@ function Form(props: settings) {
                             <div className='col-1'>
                                 {
                                     !props.isPlaying ?
-                                        <button type="button" className="btn btn-success" onClick={() => props.playGame()}>Play</button> :
-                                        <button type="button" className="btn btn-danger" onClick={() => props.stopGame()}>Stop</button>
+                                        <button type="button" className="btn btn-success" onClick={() => props.setIsPlaying(true)}>Play</button> :
+                                        <button type="button" className="btn btn-danger" onClick={() => props.setIsPlaying(false)}>Stop</button>
                                 }
                             </div>
                         </div>
