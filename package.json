@@ -1,6 +1,11 @@
 {
   "name": "game-of-life",
   "version": "0.1.0",
+  "author": {
+    "name": "Maximiliano Heredia Santoyo",
+    "email": "maxheredia95@gmail.com",
+    "url": "https://github.com/soymaxhs"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
