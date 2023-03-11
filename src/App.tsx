@@ -10,6 +10,7 @@ interface sizes {
 }
 
 function App() {
+  const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
   const [settings, setSettings] = React.useState<sizes>({
     sizeX: 16,
     sizeY: 16,
@@ -25,41 +26,54 @@ function App() {
   }
 
   const playGame = () => {
-    setMatrix(matrix?.map((r, iR) => r.map((c, iC) => {
-      const lCell = iR - 1 > 0 ? matrix[iR - 1][iC] : false;
-      const rCell = iR + 1 < settings.sizeX ? matrix[iR + 1][iC] : false;
-      const uCell = iC - 1 > 0 ? matrix[iR][iC - 1] : false;
-      const dCell = iC + 1 < settings.sizeY ? matrix[iR][iC + 1] : false;
-
-      const luCell = iR - 1 > 0 && iC - 1 > 0 ? matrix[iR - 1][iC - 1] : false;
-      const ruCell = iR + 1 < settings.sizeX && iC - 1 > 0 ? matrix[iR + 1][iC - 1] : false;
-      const ldCell = iR - 1 > 0 && iC + 1 < settings.sizeY ? matrix[iR - 1][iC + 1] : false;
-      const rdCell = iR + 1 < settings.sizeX && iC + 1 < settings.sizeY ? matrix[iR + 1][iC + 1] : false;
-
-      let counterCell = 0;
-
-      lCell && counterCell++;
-      rCell && counterCell++;
-      uCell && counterCell++;
-      dCell && counterCell++;
-
-      luCell && counterCell++;
-      ruCell && counterCell++;
-      ldCell && counterCell++;
-      rdCell && counterCell++;
-
-      if (matrix[iR][iC]) {
-        if (counterCell < 2)
-          return false;
-        if (counterCell > 3)
-          return false;
-      } else {
-        return counterCell >= 3;
-      }
-
-      return matrix[iR][iC];
-    })));
+    setIsPlaying(true);
+    console.log('Running');
   }
+
+  const stopGame = () => {
+    setIsPlaying(false);
+    console.log('Stoping');
+  }
+
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timer | null = null;
+
+    if (isPlaying) {
+      intervalId = setInterval(() => {
+        setMatrix(matrix?.map((r, iR) => r.map((c, iC) => {
+          const lCell = iR - 1 > 0 ? matrix[iR - 1][iC] : false;
+          const rCell = iR + 1 < settings.sizeX ? matrix[iR + 1][iC] : false;
+          const uCell = iC - 1 > 0 ? matrix[iR][iC - 1] : false;
+          const dCell = iC + 1 < settings.sizeY ? matrix[iR][iC + 1] : false;
+
+          const luCell = iR - 1 > 0 && iC - 1 > 0 ? matrix[iR - 1][iC - 1] : false;
+          const ruCell = iR + 1 < settings.sizeX && iC - 1 > 0 ? matrix[iR + 1][iC - 1] : false;
+          const ldCell = iR - 1 > 0 && iC + 1 < settings.sizeY ? matrix[iR - 1][iC + 1] : false;
+          const rdCell = iR + 1 < settings.sizeX && iC + 1 < settings.sizeY ? matrix[iR + 1][iC + 1] : false;
+
+          let counterCell = 0;
+
+          lCell && counterCell++;
+          rCell && counterCell++;
+          uCell && counterCell++;
+          dCell && counterCell++;
+
+          luCell && counterCell++;
+          ruCell && counterCell++;
+          ldCell && counterCell++;
+          rdCell && counterCell++;
+
+          return matrix[iR][iC] ?
+            !(counterCell < 2 || counterCell > 3)
+            : counterCell === 3;
+        })));
+      }, 500);
+    }
+
+    return ()=>{
+      intervalId !== null && clearInterval(intervalId);
+    }
+  }, [isPlaying, matrix, settings.sizeX, settings.sizeY]);
 
   return (
     <>
@@ -67,7 +81,7 @@ function App() {
         <Nav></Nav>
       </header>
       <main>
-        <Settings putSettings={setSettings} runGame={playGame}></Settings>
+        <Settings setSettings={setSettings} playGame={playGame} stopGame={stopGame} isPlaying={isPlaying}></Settings>
         <div className='grid-board'>
           {
             matrix?.map((row, iRow) => <div className='grid-board-row' key={iRow}>

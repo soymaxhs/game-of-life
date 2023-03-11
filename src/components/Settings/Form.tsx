@@ -1,15 +1,17 @@
 import React from 'react';
 
 interface settings {
-    putSettings: Function,
-    runGame: Function
+    setSettings: Function,
+    playGame: Function,
+    stopGame: Function,
+    isPlaying: boolean,
 }
 
 function Form(props: settings) {
     const [sizeX, setSizeX] = React.useState<number>(32);
     const [sizeY, setSizeY] = React.useState<number>(32);
     const updateSettings = () => {
-        props.putSettings({
+        props.setSettings({
             sizeX: sizeX,
             sizeY: sizeY,
         });
@@ -39,9 +41,11 @@ function Form(props: settings) {
                                 <button type="button" className="btn btn-primary" onClick={updateSettings}>Update</button>
                             </div>
                             <div className='col-1'>
-                                <button type="button" className="btn btn-success" onClick={()=>{
-                                    props.runGame()
-                                }}>Play</button>
+                                {
+                                    !props.isPlaying ?
+                                        <button type="button" className="btn btn-success" onClick={() => props.playGame()}>Play</button> :
+                                        <button type="button" className="btn btn-danger" onClick={() => props.stopGame()}>Stop</button>
+                                }
                             </div>
                         </div>
                     </form>
