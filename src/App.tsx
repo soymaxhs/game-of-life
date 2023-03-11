@@ -4,13 +4,17 @@ import Settings from './components/Settings/Form';
 
 function App() {
   const [settings, setSettings] = React.useState<object>({
-    sizeX: 480,
-    sizeY: 480,
+    sizeX: 128,
+    sizeY: 128,
   });
   return (
     <>
-      <Nav></Nav>
-      <Settings putSettings={setSettings}></Settings>
+      <header>
+        <Nav></Nav>
+      </header>
+      <main>
+        <Settings putSettings={setSettings}></Settings>
+      </main>
     </>
   );
 }
