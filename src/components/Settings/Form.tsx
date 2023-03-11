@@ -1,7 +1,8 @@
 import React from 'react';
 
 interface settings {
-    putSettings: Function
+    putSettings: Function,
+    runGame: Function
 }
 
 function Form(props: settings) {
@@ -34,8 +35,13 @@ function Form(props: settings) {
                                     <div className="form-text">Size y</div>
                                 </div>
                             </div>
-                            <div className='col-2'>
+                            <div className='col-1'>
                                 <button type="button" className="btn btn-primary" onClick={updateSettings}>Update</button>
+                            </div>
+                            <div className='col-1'>
+                                <button type="button" className="btn btn-success" onClick={()=>{
+                                    props.runGame()
+                                }}>Play</button>
                             </div>
                         </div>
                     </form>
