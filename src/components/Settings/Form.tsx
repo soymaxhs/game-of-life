@@ -5,8 +5,8 @@ interface settings {
 }
 
 function Form(props: settings) {
-    const [sizeX, setSizeX] = React.useState<number>(512);
-    const [sizeY, setSizeY] = React.useState<number>(512);
+    const [sizeX, setSizeX] = React.useState<number>(32);
+    const [sizeY, setSizeY] = React.useState<number>(32);
     const updateSettings = () => {
         props.putSettings({
             sizeX: sizeX,

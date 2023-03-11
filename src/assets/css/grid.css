@@ -1,0 +1,29 @@
+.grid-board {  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.grid-board-row {
+    grid-row: 1;
+    height: auto;
+}
+
+.grid-board-col {
+    grid-column: 1;
+    background-color:#ECEFF1;
+    padding: 1px;
+    width: auto;
+    align-self: center;
+    text-align: center;
+}
+
+.btn-grid {
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  color: #fff !important;
+}
